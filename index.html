@@ -1,576 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eldo M Skaria · Platform Manager Portfolio</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --brand:       #1B2A4A;
-      --brand-light: #EEF1F7;
-      --brand-dark:  #0D1B33;
-      --accent:      #B8941F;
-      --text:        #1A1F2E;
-      --muted:       #6B7280;
-      --border:      #D6DDE9;
-      --bg:          #F5F7FB;
-      --white:       #FFFFFF;
-      --radius:      10px;
-      --shadow:      0 4px 24px rgba(13,27,51,.08);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.7;
-    }
+---
+layout: default
+title: Eldo M Skaria · Digital Platform Manager
+---
+{% assign home = site.data.home %}
+{% assign works = site.work | sort: 'order' %}
 
-    /* ===== NAV ===== */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 0 5%;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-      box-shadow: 0 1px 8px rgba(30,41,59,.06);
-    }
-    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--brand); text-decoration: none; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--muted); font-size: .9rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--brand); }
-
-    /* ===== SECTIONS ===== */
-    section { padding: 80px 10%; }
-    section:nth-child(even) { background: var(--white); }
-    .section-label { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--brand); margin-bottom: 8px; }
-    h2 { font-size: 2rem; color: var(--text); margin-bottom: 16px; }
-    h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 8px; }
-    p { color: var(--muted); max-width: 700px; }
-
-    /* ===== HERO ===== */
-    #hero {
-      background: linear-gradient(135deg, #0D1B33 0%, #1B2A4A 55%, #2A3F6A 100%);
-      color: var(--white); text-align: center; padding: 120px 10% 100px;
-    }
-    #hero .section-label { color: rgba(255,255,255,.75); }
-    #hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; margin-bottom: 12px; }
-    #hero .tagline { font-size: 1.25rem; opacity: .85; max-width: 680px; margin: 0 auto 20px; }
-    #hero p { color: rgba(255,255,255,.8); max-width: 640px; margin: 0 auto 40px; }
-    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: .95rem; text-decoration: none; transition: all .2s; cursor: pointer; }
-    .btn-primary { background: #B8941F; color: #FFFFFF; }
-    .btn-primary:hover { background: #9A7A18; }
-    .btn-outline { border: 2px solid rgba(255,255,255,.6); color: var(--white); }
-    .btn-outline:hover { background: rgba(255,255,255,.1); }
-
-    /* ===== ABOUT ===== */
-    #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 32px; }
-    #about .about-left p { color: var(--muted); margin-bottom: 16px; max-width: none; }
-    .stat-row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
-    .stat { text-align: center; }
-    .stat .num { font-size: 2.2rem; font-weight: 800; color: var(--brand); }
-    .stat .lbl { font-size: .8rem; color: var(--muted); }
-
-    /* ===== SKILLS ===== */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 32px; }
-    .skill-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; }
-    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(30,41,59,.12); }
-    .skill-icon { font-size: 1.8rem; margin-bottom: 12px; }
-    .skill-card h3 { margin-bottom: 8px; }
-    .skill-card p { font-size: .92rem; margin-bottom: 12px; max-width: none; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .tag { background: var(--brand-light); color: var(--brand); font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
-
-    /* ===== PROJECTS ===== */
-    .projects-list { display: flex; flex-direction: column; gap: 40px; margin-top: 32px; }
-    .project-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow); display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: start; }
-    .project-badge { display: inline-block; background: #FBF3E0; color: #92700F; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 99px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .05em; border: 1px solid #E8D08A; }
-    .project-card h3 { font-size: 1.4rem; margin-bottom: 8px; }
-    .project-card .desc { color: var(--muted); margin-bottom: 20px; font-size: .97rem; max-width: none; }
-    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .outcome-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; color: var(--muted); }
-    .outcome-list li::before { content: "✓"; color: #16A34A; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
-    .project-meta { background: var(--bg); border-radius: 8px; padding: 20px; }
-    .meta-item { margin-bottom: 16px; }
-    .meta-item:last-child { margin-bottom: 0; }
-    .meta-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
-    .meta-value { font-size: .9rem; color: var(--text); }
-
-    /* ===== METRICS ===== */
-    #metrics { background: var(--brand); }
-    #metrics .section-label { color: rgba(255,255,255,.7); }
-    #metrics h2 { color: var(--white); }
-    #metrics > p { color: rgba(255,255,255,.7); }
-    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 40px; }
-    .metric-card { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--white); }
-    .metric-card .big { font-size: 2.8rem; font-weight: 800; color: #E8BA3A; }
-    .metric-card .desc { font-size: .88rem; opacity: .8; margin-top: 4px; }
-
-    /* ===== STACK ===== */
-    .stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 32px; }
-    .stack-group h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--brand); margin-bottom: 10px; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .stack-tag { background: var(--bg); border: 1px solid var(--border); font-size: .82rem; padding: 4px 10px; border-radius: 6px; color: var(--text); }
-
-    /* ===== CONTACT ===== */
-    #contact { background: var(--text); color: var(--white); text-align: center; }
-    #contact .section-label { color: rgba(255,255,255,.5); }
-    #contact h2 { color: var(--white); margin-bottom: 12px; }
-    #contact p { color: rgba(255,255,255,.65); margin: 0 auto 36px; }
-    .contact-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-    .contact-link { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: var(--white); text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: .9rem; transition: background .2s; }
-    .contact-link:hover { background: rgba(255,255,255,.16); }
-
-    /* ===== FOOTER ===== */
-    footer { background: #0F172A; color: rgba(255,255,255,.35); text-align: center; padding: 20px; font-size: .82rem; }
-
-    /* ===== TIMELINE STRIP ===== */
-    .timeline { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-    .tl-item { display: flex; gap: 16px; align-items: flex-start; }
-    .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); flex-shrink: 0; margin-top: 7px; }
-    .tl-body .tl-title { font-weight: 600; font-size: .9rem; color: var(--text); }
-    .tl-body .tl-sub { font-size: .82rem; color: var(--muted); }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      section { padding: 60px 6%; }
-      .project-card { grid-template-columns: 1fr; }
-      #about .about-grid { grid-template-columns: 1fr; }
-      nav { padding: 0 4%; }
-      .nav-links { gap: 16px; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <a href="#hero" class="nav-logo">EMS</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#metrics">Impact</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <p class="section-label">Platform Manager · Portfolio</p>
-  <h1>Eldo M Skaria</h1>
-  <p class="tagline">Building enterprise platforms that scale globally — from booking to delivery, across 40+ countries</p>
-  <p>Platform and product leader with 8+ years setting vision, strategy, and roadmap for high-stakes digital platforms in regulated environments. Currently Digital Platform Manager at Cambridge Boxhill Language Assessment (OET), serving individual candidates through to enterprise regulatory partners worldwide.</p>
-  <div class="btn-group">
-    <a href="#projects" class="btn btn-primary">View My Work</a>
-    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Digital Platform Manager · OET · Melbourne</p>
+    <h1>I build and run the platforms behind high-stakes assessments in 40+ countries.</h1>
+    <p class="lead">Platform and product leader with 8+ years setting vision, strategy and roadmap for booking and test-delivery platforms in regulated environments, serving individual candidates through to enterprise regulatory partners.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#work">See my work</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+    <dl class="hero-stats">
+      {% for s in home.hero_stats %}
+      <div><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+      {% endfor %}
+    </dl>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">About Me</p>
-  <h2>Platform thinking, end-to-end.</h2>
+<section id="work" class="section">
+  <div class="wrap">
+    <p class="eyebrow">Selected work</p>
+    <h2>Case studies</h2>
+    <p class="section-intro">The problem, my role, the hard parts and what changed, for the platform work I'm proudest of.</p>
 
-  <div class="about-grid">
-    <div class="about-left">
-      <p>I started my career as an Analyst Programmer at Cognizant, working across analysis, design, development, and testing of enterprise software. That technical grounding gave me something rare when I moved into product: I understand what engineers are actually solving for, not just what the ticket says. Moving through Senior Business Analyst and Digital Product Owner roles at OET, I eventually took full ownership of the global booking and test-delivery platforms — platforms that underpin high-stakes English language assessments for healthcare professionals across 40+ countries.</p>
-
-      <p>My platform philosophy is simple: a great platform removes the need for human intervention. If an operator is running a script to fix a candidate's booking, the platform has failed. I focus relentlessly on self-service, automation, and reducing operational toil — while keeping security, compliance, and scale as non-negotiables, especially in regulated environments where GDPR and CCPA aren't optional extras.</p>
-
-      <p>Right now I'm most energised by AI-assisted platform automation — specifically, how intelligent scheduling and delivery can reduce the overhead of human-in-the-loop operations without sacrificing quality or candidate trust. I'm looking for senior platform roles where I can own platform strategy end-to-end, ideally at a mission-driven company building products that genuinely matter to users.</p>
+    <div class="work-grid">
+      {% for w in works %}
+      <a class="work-card" href="{{ w.url | relative_url }}">
+        <p class="work-cat">{{ w.category }}</p>
+        <h3>{{ w.title }}</h3>
+        <p class="work-summary">{{ w.summary }}</p>
+        {% if w.metrics %}
+        <div class="work-metrics">
+          {% for m in w.metrics limit: 2 %}
+          <div><strong>{{ m.value }}</strong><span>{{ m.short | default: m.label }}</span></div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <span class="work-more">Read case study <span aria-hidden="true">→</span></span>
+      </a>
+      {% endfor %}
     </div>
+  </div>
+</section>
 
-    <div class="about-right">
-      <div style="background:var(--brand-light);border-radius:var(--radius);padding:28px;">
-        <h3 style="margin-bottom:20px;color:var(--brand);">Quick Facts</h3>
-        <div class="meta-item">
-          <div class="meta-label">Total Experience</div>
-          <div class="meta-value">8+ years across platform, product &amp; engineering roles</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Industries</div>
-          <div class="meta-value">EdTech · Language Assessment · Enterprise Software</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Company Type</div>
-          <div class="meta-value">Mission-driven scale-up · Regulated / high-stakes environments</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Location / Availability</div>
-          <div class="meta-value">Melbourne, VIC · Australian Citizen · Open to remote</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Education</div>
-          <div class="meta-value">Master of Business Information Systems · Monash University</div>
-        </div>
+<section id="impact" class="section section-dark">
+  <div class="wrap">
+    <p class="eyebrow">Impact</p>
+    <h2>Numbers that tell the story</h2>
+    <p class="section-intro">Platform work is only real if it moves metrics. These are the ones mine have moved.</p>
+    <div class="impact-grid">
+      {% for m in home.impact %}
+      <div class="impact-card">
+        <div class="impact-value">{{ m.value }}</div>
+        <p>{{ m.label }}</p>
       </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-      <div class="stat-row" style="margin-top:28px;">
-        <div class="stat">
-          <div class="num">3+</div>
-          <div class="lbl">Platforms owned</div>
-        </div>
-        <div class="stat">
-          <div class="num">18K+</div>
-          <div class="lbl">Assessments/month</div>
-        </div>
-        <div class="stat">
-          <div class="num">40+</div>
-          <div class="lbl">Countries</div>
-        </div>
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">How I work</p>
+    <h2>Platform thinking, end to end</h2>
+    <div class="principles">
+      {% for p in home.principles %}
+      <div class="principle">
+        <span class="principle-num">0{{ forloop.index }}</span>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.text }}</p>
       </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-      <div style="margin-top:28px;">
-        <h4 style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--brand);margin-bottom:12px;">Career Timeline</h4>
-        <div class="timeline">
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-title">Digital Platform Manager</div>
-              <div class="tl-sub">OET · Jan 2026 – Present</div>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-title">Digital Product Owner – Platforms</div>
-              <div class="tl-sub">OET · Mar 2023 – Jan 2026</div>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-title">Senior Business Analyst</div>
-              <div class="tl-sub">OET · Sep 2020 – Mar 2023</div>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-title">Analyst Programmer</div>
-              <div class="tl-sub">Cognizant Technology Solutions · Sep 2014 – Feb 2018</div>
-            </div>
-          </div>
+<section class="section section-alt">
+  <div class="wrap">
+    <p class="eyebrow">Capabilities</p>
+    <h2>Where I'm deepest</h2>
+    <div class="cap-grid">
+      {% for c in home.capabilities %}
+      <div class="cap-card">
+        <h3>{{ c.title }}</h3>
+        <p>{{ c.text }}</p>
+        <div class="tags">{% for t in c.tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="wrap about-grid">
+    <div>
+      <p class="eyebrow">About</p>
+      <h2>From code to platform strategy</h2>
+      <p>I started my career as an Analyst Programmer at Cognizant, working across analysis, design, development and testing of enterprise software. That technical grounding shaped how I work in product: I understand what engineers are actually solving for, not just what the ticket says.</p>
+      <p>Moving through Senior Business Analyst and Digital Product Owner roles at OET, I took full ownership of the global booking and test-delivery platforms that underpin high-stakes English language assessments for healthcare professionals in 40+ countries.</p>
+      <p>Right now I'm most energised by AI-assisted platform automation: how intelligent scheduling, delivery and operational tooling can cut the overhead of human-in-the-loop work without sacrificing quality or candidate trust.</p>
+      <dl class="facts">
+        {% for f in home.facts %}<div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>{% endfor %}
+      </dl>
+    </div>
+    <div>
+      <h3 class="side-title">Experience</h3>
+      <ol class="timeline">
+        {% for e in home.experience %}
+        <li>
+          <span class="tl-role">{{ e.role }}</span>
+          <span class="tl-meta">{{ e.org }} · {{ e.period }}</span>
+        </li>
+        {% endfor %}
+      </ol>
+      <h3 class="side-title">Toolkit</h3>
+      <div class="toolkit">
+        {% for g in home.toolkit %}
+        <div>
+          <h4>{{ g.group }}</h4>
+          <p>{{ g.items | join: ' · ' }}</p>
         </div>
+        {% endfor %}
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <p class="section-label">Core Competencies</p>
-  <h2>What I bring to the table</h2>
-  <p>Platform management spans strategy, technology, and people. Here's where I'm deepest.</p>
-
-  <div class="skills-grid">
-
-    <div class="skill-card">
-      <div class="skill-icon">🔌</div>
-      <h3>API & Integration Strategy</h3>
-      <p>Own third-party API and integration decisions across the platform — evaluating build vs. buy, managing vendor relationships, and migrating to more fit-for-purpose solutions. Led the replacement of a Zoom-based speaking platform with a purpose-built secure alternative, and migrated timezone resolution from Google Timezone APIs to LocationIQ to reduce costs and improve localisation accuracy.</p>
-      <div class="tags">
-        <span class="tag">REST APIs</span>
-        <span class="tag">Third-party Integration</span>
-        <span class="tag">API Cost Optimisation</span>
-        <span class="tag">Vendor Selection</span>
-        <span class="tag">COTS Platforms</span>
-        <span class="tag">Integration Patterns</span>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">📊</div>
-      <h3>Data Governance & Migration</h3>
-      <p>Led complex data mapping and migration projects across globally distributed, compliance-critical systems. Applied transformation logic and metadata management while preserving data lineage, and unified enterprise partner data onto a single verification platform — all while maintaining full GDPR and CCPA compliance.</p>
-      <div class="tags">
-        <span class="tag">Data Migration</span>
-        <span class="tag">Data Mapping</span>
-        <span class="tag">GDPR / CCPA</span>
-        <span class="tag">Data Lineage</span>
-        <span class="tag">Metadata Management</span>
-        <span class="tag">Partner Data Unification</span>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🚀</div>
-      <h3>Platform Product Strategy</h3>
-      <p>Define and drive platform product vision, strategy, and roadmap aligned to commercial and customer outcomes — balancing long-term platform direction with near-term delivery. Implemented differential pricing that drove a 20% increase in global sales, and continuously improved a CBT platform to support 3,000+ tests monthly across 40+ countries.</p>
-      <div class="tags">
-        <span class="tag">Platform Roadmap</span>
-        <span class="tag">Product Vision</span>
-        <span class="tag">OKRs</span>
-        <span class="tag">Prioritisation Frameworks</span>
-        <span class="tag">Commercial Outcomes</span>
-        <span class="tag">Growth Strategy</span>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🤝</div>
-      <h3>Cross-functional Leadership</h3>
-      <p>Lead delivery across engineering, UX, operations, and external partners — translating complex technical trade-offs for non-technical stakeholders and aligning teams at every level of seniority. Currently managing a team of 4 support consultants, 2 developers, and a technical analyst, while driving roadmap commitments across the full platform lifecycle.</p>
-      <div class="tags">
-        <span class="tag">Stakeholder Alignment</span>
-        <span class="tag">Agile / Scrum</span>
-        <span class="tag">Team Leadership</span>
-        <span class="tag">Partner Relationships</span>
-        <span class="tag">Technical Communication</span>
-        <span class="tag">RACI / DACI</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label">Featured Work</p>
-  <h2>Platform projects I'm proud of</h2>
-  <p>Three projects that reflect the breadth of my platform experience — from SaaS delivery to data migration to global booking infrastructure.</p>
-
-  <div class="projects-list">
-
-    <!-- PROJECT 1: Secure Remote Speaking Platform -->
-    <div class="project-card">
-      <div>
-        <span class="project-badge">Product · SaaS Platform</span>
-        <h3>Secure Remote Speaking Platform — Replacing Zoom with a Purpose-Built Solution</h3>
-        <p class="desc">OET's speaking test delivery relied on a third-party Zoom integration — a solution never designed for high-stakes, regulated assessment. Licensing costs were ongoing, two full-time team members were required to manage the workflow manually, and security and data-protection standards were increasingly difficult to meet. I led the end-to-end product delivery of a purpose-built, secure remote speaking platform (~$4M investment) that replaced the Zoom dependency entirely, automating previously manual workflows and meeting enterprise-grade security and GDPR/CCPA requirements.</p>
-        <h4 style="margin:16px 0 8px;font-size:.9rem;color:var(--text);">Key Outcomes</h4>
-        <ul class="outcome-list">
-          <li>Eliminated ~$1,000/month in third-party licensing costs</li>
-          <li>Automated workflows previously requiring 2 full-time resources, saving ~AUD $180,000/year</li>
-          <li>Met high-stakes security and data-protection standards (GDPR, CCPA) required for regulated assessment</li>
-          <li>Delivered full product lifecycle from discovery to release, partnering with engineering and UX</li>
-        </ul>
-      </div>
-      <div class="project-meta">
-        <div class="meta-item">
-          <div class="meta-label">Your Role</div>
-          <div class="meta-value">Digital Product Owner – Platforms (sole platform PM)</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Investment</div>
-          <div class="meta-value">~$4M</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Timeline</div>
-          <div class="meta-value">Mar 2023 – Jan 2026</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Compliance</div>
-          <div class="meta-value">GDPR · CCPA · High-stakes assessment security standards</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Biggest Challenge</div>
-          <div class="meta-value">Replacing a live, globally-used third-party integration with a custom platform while maintaining zero disruption to exam delivery</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 2: Booking Platform & API Integration -->
-    <div class="project-card">
-      <div>
-        <span class="project-badge">Developer Platform · API</span>
-        <h3>Global Booking Platform — Self-Service, API Integration & Operational Automation</h3>
-        <p class="desc">OET's global booking platform supports 15,000+ paper-based and 3,000+ computer-based assessments monthly across 40+ countries — a complex, regulated system touching individual candidates, enterprise partners, and operations teams. I owned the platform roadmap and drove continuous improvement: introducing a self-service "reschedule on demand" feature to eliminate manual agent intervention, making API integration decisions (including migrating timezone resolution from Google Timezone APIs to LocationIQ), and implementing differential pricing to unlock commercial growth.</p>
-        <h4 style="margin:16px 0 8px;font-size:.9rem;color:var(--text);">Key Outcomes</h4>
-        <ul class="outcome-list">
-          <li>Launched self-service reschedule capability — eliminated manual rescheduling scripts previously run by agents, cutting customer-service back-and-forth</li>
-          <li>Migrated timezone resolution API (Google → LocationIQ), reducing API costs while improving localisation accuracy for candidates across 40+ countries</li>
-          <li>Implemented differential pricing across booking products, driving a 20% increase in global OET campaign sales</li>
-          <li>Reduced paper-based test booking time by 20% through booking experience transformation</li>
-        </ul>
-      </div>
-      <div class="project-meta">
-        <div class="meta-item">
-          <div class="meta-label">Your Role</div>
-          <div class="meta-value">Digital Product Owner & Digital Platform Manager</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Scale</div>
-          <div class="meta-value">18,000+ assessments/month · 40+ countries</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Timeline</div>
-          <div class="meta-value">Sep 2020 – Present (ongoing roadmap ownership)</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Key APIs</div>
-          <div class="meta-value">LocationIQ · Google Timezone (migrated from) · Third-party booking integrations</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Biggest Challenge</div>
-          <div class="meta-value">Balancing long-term platform health with continuous near-term delivery across a globally active, high-stakes system</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 3: Data Migration & Partner Unification -->
-    <div class="project-card">
-      <div>
-        <span class="project-badge">Data Platform</span>
-        <h3>Legacy Data Migration & Enterprise Partner Data Unification</h3>
-        <p class="desc">OET's legacy stack held globally distributed candidate and results data that needed to move to a new platform without compromising compliance, lineage, or data quality. Simultaneously, enterprise regulatory partners (Recognising Organisations) were accessing results data through fragmented, inconsistent interfaces. I led the data migration — applying transformation logic, metadata management, and governance controls — and unified result verification for all enterprise partners onto a single platform.</p>
-        <h4 style="margin:16px 0 8px;font-size:.9rem;color:var(--text);">Key Outcomes</h4>
-        <ul class="outcome-list">
-          <li>Migrated globally compliant candidate data from legacy stack to new platform — zero data loss, full lineage preserved</li>
-          <li>Reduced result-verification time for enterprise partners by 10%</li>
-          <li>Unified result verification for all Recognising Organisations onto a single platform, improving partner adoption through continuous, feedback-driven delivery</li>
-          <li>Maintained full GDPR and CCPA compliance throughout migration and post-migration operations</li>
-        </ul>
-      </div>
-      <div class="project-meta">
-        <div class="meta-item">
-          <div class="meta-label">Your Role</div>
-          <div class="meta-value">Digital Product Owner – Platforms</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Data Scope</div>
-          <div class="meta-value">Global candidate &amp; results data · Enterprise partner (RO) data</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Timeline</div>
-          <div class="meta-value">Mar 2023 – Jan 2026</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Compliance</div>
-          <div class="meta-value">GDPR · CCPA · Metadata management · Data lineage</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Biggest Challenge</div>
-          <div class="meta-value">Applying transformation logic at scale while preserving lineage and meeting cross-jurisdictional compliance requirements</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- METRICS -->
-<section id="metrics">
-  <p class="section-label">Quantified Impact</p>
-  <h2>Numbers that tell the story</h2>
-  <p style="color:rgba(255,255,255,.7);">Platform work is only real if it moves metrics. Here's what mine have moved.</p>
-
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="big">~$180K</div>
-      <div class="desc">AUD saved per year by automating 2 FTE workflows via the purpose-built speaking platform</div>
-    </div>
-    <div class="metric-card">
-      <div class="big">+20%</div>
-      <div class="desc">Increase in global OET campaign sales from differential pricing across booking products</div>
-    </div>
-    <div class="metric-card">
-      <div class="big">18,000+</div>
-      <div class="desc">Assessments delivered monthly across 40+ countries on platforms I own</div>
-    </div>
-    <div class="metric-card">
-      <div class="big">−20%</div>
-      <div class="desc">Reduction in booking time for paper-based test takers through booking experience transformation</div>
+<section id="contact" class="section section-dark contact">
+  <div class="wrap">
+    <p class="eyebrow">Let's talk</p>
+    <h2>Open to senior platform roles in Melbourne or remote</h2>
+    <p class="section-intro">I'm exploring Digital Platform Manager and Senior Product Manager – Platform roles, especially at mission-driven organisations where platform quality directly affects real people. Happy to talk about your roadmap challenges.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn profile</a>
     </div>
   </div>
 </section>
-
-<!-- STACK -->
-<section id="stack">
-  <p class="section-label">Tools & Approach</p>
-  <h2>What I work with</h2>
-  <p>The tools and practices I reach for across platform strategy, delivery, compliance, and operations.</p>
-
-  <div class="stack-grid">
-    <div class="stack-group">
-      <h4>APIs & Integration</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">REST APIs</span>
-        <span class="stack-tag">LocationIQ</span>
-        <span class="stack-tag">Google APIs</span>
-        <span class="stack-tag">Webhook Patterns</span>
-        <span class="stack-tag">COTS Evaluation</span>
-      </div>
-    </div>
-    <div class="stack-group">
-      <h4>Data & Governance</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">Data Mapping</span>
-        <span class="stack-tag">Data Migration</span>
-        <span class="stack-tag">GDPR / CCPA</span>
-        <span class="stack-tag">Metadata Mgmt</span>
-        <span class="stack-tag">Data Lineage</span>
-      </div>
-    </div>
-    <div class="stack-group">
-      <h4>Product & PM</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">Jira</span>
-        <span class="stack-tag">Confluence</span>
-        <span class="stack-tag">User Stories</span>
-        <span class="stack-tag">Backlog Mgmt</span>
-        <span class="stack-tag">OKRs</span>
-      </div>
-    </div>
-    <div class="stack-group">
-      <h4>Delivery</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">Agile / Scrum</span>
-        <span class="stack-tag">Sprint Planning</span>
-        <span class="stack-tag">Discovery</span>
-        <span class="stack-tag">Acceptance Criteria</span>
-        <span class="stack-tag">Release Mgmt</span>
-      </div>
-    </div>
-    <div class="stack-group">
-      <h4>Compliance & Security</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">GDPR</span>
-        <span class="stack-tag">CCPA</span>
-        <span class="stack-tag">Enterprise Security Standards</span>
-        <span class="stack-tag">Privacy by Design</span>
-      </div>
-    </div>
-    <div class="stack-group">
-      <h4>Analysis & Reporting</h4>
-      <div class="stack-tags">
-        <span class="stack-tag">Data Analysis</span>
-        <span class="stack-tag">Dashboard Reporting</span>
-        <span class="stack-tag">Requirements Elicitation</span>
-        <span class="stack-tag">Systems Analysis</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Let's Talk</p>
-  <h2>Open to senior platform roles in Melbourne or remote</h2>
-  <p>I'm actively exploring Digital Platform Manager and Senior Product Manager – Platform roles, particularly at mission-driven organisations where platform quality directly impacts real users. Happy to chat about your roadmap challenges.</p>
-  <div class="contact-links">
-    <a href="mailto:eldhoskaria@gmail.com" class="contact-link">
-      <span>✉️</span>
-      <span>eldhoskaria@gmail.com</span>
-    </a>
-    <a href="https://linkedin.com/in/eldoskaria" target="_blank" class="contact-link">
-      <span>💼</span>
-      <span>linkedin.com/in/eldoskaria</span>
-    </a>
-    <a href="tel:+61469706297" class="contact-link">
-      <span>📞</span>
-      <span>+61 469 706 297</span>
-    </a>
-  </div>
-</section>
-
-<footer>
-  <p>© 2026 Eldo M Skaria · Platform Manager Portfolio · Melbourne, VIC</p>
-</footer>
-
-</body>
-</html>

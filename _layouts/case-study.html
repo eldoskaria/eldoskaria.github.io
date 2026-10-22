@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{% assign works = site.work | sort: 'order' %}
+{% assign idx = 0 %}
+{% for w in works %}{% if w.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+{% assign prev_i = idx | minus: 1 %}
+{% assign next_i = idx | plus: 1 %}
+{% if idx > 0 %}{% assign prev = works[prev_i] %}{% else %}{% assign prev = nil %}{% endif %}
+{% assign next = works[next_i] %}
+
+<article class="case">
+  <header class="case-hero">
+    <div class="wrap">
+      <a class="back-link" href="{{ '/#work' | relative_url }}">← All work</a>
+      <p class="eyebrow">{{ page.category }}</p>
+      <h1>{{ page.headline | default: page.title }}</h1>
+      <p class="lead">{{ page.summary }}</p>
+    </div>
+  </header>
+
+  {% if page.metrics %}
+  <section class="case-metrics" aria-label="Results">
+    <div class="wrap metric-row">
+      {% for m in page.metrics %}
+      <div class="metric">
+        <div class="metric-value">{{ m.value }}</div>
+        <div class="metric-label">{{ m.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="wrap case-body">
+    <aside class="glance" aria-label="At a glance">
+      <h2 class="glance-title">At a glance</h2>
+      <dl>
+        <dt>Role</dt><dd>{{ page.role }}</dd>
+        <dt>Timeline</dt><dd>{{ page.period }}</dd>
+        {% for f in page.facts %}<dt>{{ f.label }}</dt><dd>{{ f.value }}</dd>{% endfor %}
+      </dl>
+      {% if page.tags %}
+      <div class="tags">{% for t in page.tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+      {% endif %}
+    </aside>
+
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+
+  <nav class="wrap case-pager" aria-label="More work">
+    {% if prev %}<a class="pager-link" href="{{ prev.url | relative_url }}"><span>← Previous</span>{{ prev.title }}</a>{% else %}<span></span>{% endif %}
+    {% if next %}<a class="pager-link pager-next" href="{{ next.url | relative_url }}"><span>Next →</span>{{ next.title }}</a>{% endif %}
+  </nav>
+</article>

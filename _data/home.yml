@@ -1,0 +1,88 @@
+# Content for the home page. Edit the text here; the layout picks it up.
+
+hero_stats:
+  - value: "18K+"
+    label: Assessments a month on platforms I own
+  - value: "40+"
+    label: Countries served
+  - value: "~$180K"
+    label: AUD a year saved through automation
+  - value: "8+"
+    label: Years across platform, product and engineering
+
+impact:
+  - value: "~$180K"
+    label: AUD saved a year by automating two full-time workflows in the new speaking platform
+  - value: "+20%"
+    label: Global OET campaign sales after introducing differential pricing
+  - value: "18,000+"
+    label: Assessments delivered every month across 40+ countries
+  - value: "−20%"
+    label: Booking time for paper-based test takers after the booking redesign
+  - value: "−10%"
+    label: Result-verification time for enterprise partners on a single platform
+  - value: "0"
+    label: Failures creating 370 venue, room and reservation records in one automated run
+
+principles:
+  - title: A great platform removes the need for human intervention
+    text: If an operator is running a script to fix a candidate's booking, the platform has failed. I push for self-service and automation that take the toil out of operations.
+  - title: Security and compliance are non-negotiable
+    text: In regulated, high-stakes assessment, GDPR and CCPA aren't extras. They shape the design from the first conversation, not the last.
+  - title: Understand what engineers are actually solving for
+    text: I started as an analyst programmer, so I read trade-offs in technical terms, not just ticket terms, and translate them clearly for non-technical stakeholders.
+
+capabilities:
+  - title: Platform product strategy
+    text: Vision, strategy and roadmap tied to commercial and customer outcomes, balancing long-term platform health with near-term delivery.
+    tags: [Roadmaps, OKRs, Prioritisation, Pricing]
+  - title: API and integration strategy
+    text: Build-versus-buy decisions, vendor selection and migrations to better-fit services, from replacing Zoom to switching timezone APIs.
+    tags: [REST APIs, Vendor selection, Cost optimisation]
+  - title: Data governance and migration
+    text: Data mapping, transformation and migration across compliance-critical systems with lineage preserved and GDPR/CCPA met.
+    tags: [Data migration, Lineage, GDPR / CCPA]
+  - title: Cross-functional leadership
+    text: Leading a team of support consultants, developers and a technical analyst, and aligning engineering, UX, operations and partners.
+    tags: [Agile / Scrum, Stakeholders, Partners]
+  - title: Operational automation
+    text: Turning repetitive operational work into reliable, auditable tooling, including AI-assisted automation of bulk setup in the booking portal.
+    tags: [Python, Playwright, AI-assisted delivery]
+
+experience:
+  - role: Digital Platform Manager
+    org: OET
+    period: Jan 2026 – Present
+  - role: Digital Product Owner – Platforms
+    org: OET
+    period: Mar 2023 – Jan 2026
+  - role: Senior Business Analyst
+    org: OET
+    period: Sep 2020 – Mar 2023
+  - role: Analyst Programmer
+    org: Cognizant Technology Solutions
+    period: Sep 2014 – Feb 2018
+
+facts:
+  - label: Industries
+    value: EdTech · Language assessment · Enterprise software
+  - label: Environment
+    value: Mission-driven scale-up · Regulated, high-stakes
+  - label: Location
+    value: Melbourne, VIC · Australian citizen · Open to remote
+  - label: Education
+    value: Master of Business Information Systems, Monash University
+
+toolkit:
+  - group: APIs and integration
+    items: [REST APIs, LocationIQ, Google APIs, Webhooks, COTS evaluation]
+  - group: Data and governance
+    items: [Data mapping, Data migration, GDPR / CCPA, Metadata, Lineage]
+  - group: Product
+    items: [Jira, Confluence, User stories, Backlog, OKRs]
+  - group: Delivery
+    items: [Agile / Scrum, Discovery, Acceptance criteria, Release management]
+  - group: Automation
+    items: [Python, Playwright, Excel, Claude Code]
+  - group: Analysis
+    items: [Data analysis, Dashboards, Requirements, Systems analysis]

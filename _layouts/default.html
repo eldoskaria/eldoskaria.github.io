@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}"><span class="brand-mark">ES</span> Eldo M Skaria</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="{{ '/#work' | relative_url }}">Work</a>
+        <a href="{{ '/#impact' | relative_url }}">Impact</a>
+        <a href="{{ '/#about' | relative_url }}">About</a>
+        <a class="nav-cta" href="{{ '/#contact' | relative_url }}">Contact</a>
+        <button class="theme-toggle" type="button" aria-label="Switch light or dark theme">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>© {{ site.time | date: '%Y' }} {{ site.author.name }} · {{ site.tagline }} · {{ site.location }}</p>
+      <p>
+        <a href="mailto:{{ site.email }}">Email</a> ·
+        <a href="https://www.linkedin.com/in/{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.theme-toggle').addEventListener('click', function () {
+      var root = document.documentElement;
+      var dark = root.dataset.theme
+        ? root.dataset.theme === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    });
+  </script>
+</body>
+</html>

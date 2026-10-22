@@ -1,0 +1,41 @@
+title: Eldo M Skaria
+tagline: Digital Platform Manager
+description: >-
+  Digital Platform Manager in Melbourne. I own the booking and test-delivery
+  platforms behind high-stakes English assessments in 40+ countries.
+url: "https://eldoskaria.github.io"
+baseurl: ""
+lang: en_AU
+author:
+  name: Eldo M Skaria
+email: eldhoskaria@gmail.com
+linkedin: eldoskaria
+location: Melbourne, VIC
+
+# Each file in _work/ becomes a case study at /work/<file-name>/
+collections:
+  work:
+    output: true
+    permalink: /work/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: work
+    values:
+      layout: case-study
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+
+exclude:
+  - README.md
+  - case-study-template.md
